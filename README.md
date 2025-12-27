@@ -123,7 +123,7 @@ Gráficas dinámicas desarrolladas con **Chart.js**, alimentadas desde **Stored 
      "DefaultConnection": "Server=TU_SERVIDOR;Database=IVelazquezPruebaKPMG;User Id=USUARIO;Password=PASSWORD;"
    }
 
-##Credenciales de ACCeSO
+##Credenciales de ACCESO
 Credenciales 
 RRHH 
 usuario : isaac
