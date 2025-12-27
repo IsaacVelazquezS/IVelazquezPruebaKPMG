@@ -1,0 +1,121 @@
+﻿@model ML.Empleado
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+<h2>Formulario</h2>
+
+@using (Html.BeginForm("Formulario", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data", @onsubmit = "return validarform()" }))
+{
+   
+    <div class="container my-4">
+
+        @Html.HiddenFor(model => model.IdEmpleado)
+
+        <div class="row g-3">
+
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                @Html.LabelFor(model => model.Age, new { @class = "form-label" })
+                @Html.TextBoxFor(model => model.Age, new {
+                @class = "form-control",
+                        type = "text",
+                        pattern = "[0-9]+",
+                        title = "Solo se permiten números enteros",
+                        placeholder = "Edad"
+                        })
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            @Html.LabelFor(model => model.JoiningYear, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.JoiningYear, new {
+                        @class = "form-control",
+                        type = "text",
+                        pattern = "[0-9]{4}",
+                        title = "Debe ser un año válido de 4 dígitos",
+                        placeholder = "Año de ingreso"
+                        })
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            @Html.LabelFor(model => model.ExperienceInCurrentDomain, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.ExperienceInCurrentDomain, new {
+                        @class = "form-control",
+                        type = "text",
+                        pattern = "[0-9]+",
+                        title = "Solo se permiten números enteros",
+                        placeholder = "Experiencia actual"
+                        })
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            @Html.LabelFor(model => model.PaymentTier, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.PaymentTier, new {
+                        @class = "form-control",
+                        type = "text",
+                        pattern = "[0-9]+",
+                        title = "Solo se permiten números enteros",
+                        placeholder = "Nivel de pago"
+                        })
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            @Html.LabelFor(model => model.Education.IdEducation, new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.Education.IdEducation,
+                        new SelectList(Model.Education.Educations, "IdEducation", "Name", Model.Education.IdEducation),
+                        "Selecciona educación",
+                        new { @class = "form-select" })
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            @Html.LabelFor(model => model.City.IdCity, new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.City.IdCity,
+                        new SelectList(Model.City.Cities, "IdCity", "Name", Model.City.IdCity),
+                        "Selecciona ciudad",
+                        new { @class = "form-select" })
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            @Html.LabelFor(model => model.Gender.IdGender, new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.Gender.IdGender,
+                        new SelectList(Model.Gender.Genders, "IdGender", "Name", Model.Gender.IdGender),
+                        "Selecciona género",
+                        new { @class = "form-select" })
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            @Html.LabelFor(model => model.EverBenched.IdEverBenche, new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.EverBenched.IdEverBenche,
+                        new SelectList(Model.EverBenched.EverBenches, "IdEverBenche", "Description", Model.EverBenched.IdEverBenche),
+                        "Selecciona opción",
+                        new { @class = "form-select" })
+        </div>
+
+        <div class="col-lg-4 col-md-6 d-flex align-items-end">
+            <div class="form-check">
+                @Html.CheckBox("LeaveOrnot", Model.LeaveOrnot ?? false, new { @class = "form-check-input" })
+                @Html.LabelFor(model => model.LeaveOrnot, new { @class = "form-check-label ms-2" })
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 mb-2">
+            <button type="submit" class="btn btn-success w-100">
+                Guardar
+            </button>
+        </div>
+        <div class="col-md-6 mb-2">
+            @Html.ActionLink(
+                        "Regresar",
+                        "GetAll",
+                        "Empleado",
+                        null,
+                        new { @class = "btn btn-danger w-100" })
+        </div>
+    </div>
+
+</div>
+}

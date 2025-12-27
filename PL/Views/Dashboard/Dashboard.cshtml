@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center mb-4 fw-bold text-primary">
+    📊 Dashboard de Empleados
+</h2>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container-fluid">
+
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-center text-muted mb-3">Distribución por Género</h6>
+                    <canvas id="chartGenero"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-center text-muted mb-3">Rango de Edad</h6>
+                    <canvas id="chartEdad"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-center text-muted mb-3">Empleados por Ciudad</h6>
+                    <canvas id="chartCiudad"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-center text-muted mb-3">Nivel Educativo</h6>
+                    <canvas id="chartNivelEducativo"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-center text-muted mb-3">
+                        Experiencia vs Nivel de Pago
+                    </h6>
+                    <canvas id="chartExperienciaPago"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    const API = "http://localhost:5213/api/reportes";
+    const token = "@ViewBag.Token";
+
+    if (!token) {
+        alert("Sesión expirada");
+        window.location.href = "/Login";
+    }
+
+    const authHeaders = {
+        "Authorization": "Bearer " + token
+    };
+
+    fetch(`${API}/genero`, { headers: authHeaders })
+        .then(res => {
+            if (!res.ok) throw "No autorizado";
+            return res.json();
+        })
+        .then(data => {
+            new Chart(document.getElementById('chartGenero'), {
+                type: 'pie',
+                data: {
+                    labels: data.map(x => x.genero),
+                    datasets: [{
+                        data: data.map(x => x.total)
+                    }]
+                }
+            });
+        });
+
+
+    fetch(`${API}/edad`, { headers: authHeaders })
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('chartEdad'), {
+                type: 'bar',
+                data: {
+                    labels: data.map(x => x.rangoEdad),
+                    datasets: [{
+                        label: 'Empleados',
+                        data: data.map(x => x.total)
+                    }]
+                }
+            });
+        });
+
+
+    fetch(`${API}/ciudad`, { headers: authHeaders })
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('chartCiudad'), {
+                type: 'bar',
+                data: {
+                    labels: data.map(x => x.ciudad),
+                    datasets: [{
+                        label: 'Empleados',
+                        data: data.map(x => x.total)
+                    }]
+                },
+                options: { indexAxis: 'y' }
+            });
+        });
+
+
+    fetch(`${API}/nivel-educativo`, { headers: authHeaders })
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('chartNivelEducativo'), {
+                type: 'doughnut',
+                data: {
+                    labels: data.map(x => x.nivelEducativo),
+                    datasets: [{
+                        data: data.map(x => x.total)
+                    }]
+                }
+            });
+        });
+
+
+    fetch(`${API}/experiencia-pago`, { headers: authHeaders })
+        .then(res => res.json())
+        .then(data => {
+            new Chart(document.getElementById('chartExperienciaPago'), {
+                type: 'line',
+                data: {
+                    labels: data.map(x => `Nivel ${x.nivelPago}`),
+                    datasets: [{
+                        label: 'Promedio de Experiencia',
+                        data: data.map(x => x.promedioExperiencia)
+                    }]
+                }
+            });
+        });
+</script>
+

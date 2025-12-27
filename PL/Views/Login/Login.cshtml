@@ -1,0 +1,58 @@
+﻿@model DL.LoginDTO
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+<div class="container vh-100 d-flex align-items-center justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-4 p-md-5">
+
+                <h3 class="text-center mb-4 fw-bold text-primary">
+                    Iniciar Sesión
+                </h3>
+
+                <form asp-action="Login" method="post">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Usuario
+                        </label>
+                        <input asp-for="Username"
+                               class="form-control form-control-lg"
+                               placeholder="Ingresa tu usuario"
+                               autocomplete="username" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            Contraseña
+                        </label>
+                        <input asp-for="Password"
+                               type="password"
+                               class="form-control form-control-lg"
+                               placeholder="••••••••"
+                               autocomplete="current-password" />
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary btn-lg w-100">
+                        Entrar
+                    </button>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger text-center mt-3 mb-0">
+                            @ViewBag.Error
+                        </div>
+                    }
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

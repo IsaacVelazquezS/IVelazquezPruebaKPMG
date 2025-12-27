@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "CargaMasiva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Carga masiva desde .CSV</h1>
+
+            @if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-success mt-3">
+                    @ViewBag.Mensaje
+                </div>
+            }
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger mt-3">
+                    @ViewBag.Error
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <form asp-controller="Empleado" asp-action="CargaMasiva" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="archivoCSV" class="form-label">Selecciona el archivo .CSV</label>
+                <input type="file" class="form-control" id="archivoCSV" name="archivoCSV" accept=".csv" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Cargar Archivo</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Acceso Denegado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="text-danger">403 - Acceso denegado</h1>
+
+    <p class="lead">
+        No cuenta con los permisos necesarios para acceder a este recurso.
+    </p>
+
+    <a class="btn btn-primary" asp-controller="Dashboard" asp-action="Dashboard">
+        Volver al inicio
+    </a>
+</div>
